@@ -1,0 +1,160 @@
+:root
+{
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-color: #f3f3f3;
+}
+
+body
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+}
+
+header
+{
+	text-align: center;
+	width: 100%;
+	border-bottom: 1px solid black;
+	background-color: #1d1d1d;
+	color: #e3e3e3;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+header h1
+{
+	font-family: 'Times New Roman', Times, serif;
+	font-size: xxx-large;
+	margin: 2px 0 2px 0;
+	text-shadow: -4px 4px #3d3d3d;
+}
+
+header nav
+{
+	width: 60%;
+	max-width: 600px;
+	display: flex;
+	justify-content: space-around;
+}
+
+header button
+{
+	font-size: medium;
+	background-color: #3d3d3d;
+	color: inherit;	
+	border-radius: 5px 5px 0 0;
+	border: 1px solid black;
+	border-bottom: none;
+	padding: 3px;
+	width: 20%;
+	min-width: min-content;
+}
+
+header button:hover
+{
+	animation-duration: 500ms;
+	animation-fill-mode: forwards;
+	animation-name: widen;
+	cursor: pointer;
+} 
+
+@keyframes widen
+{
+	from {
+		height: initial;
+	}
+
+	to {
+		width: 30%;
+	}
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus-visible {
+	outline: none;
+}
+
+.welcome
+{
+	text-align: center;
+	margin-top: 5px;
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+}
+
+h2, h5
+{
+	margin: 0;
+}
+
+.box
+{
+	border: 2px solid black;
+	border-radius: 10px;
+	margin: 10px;
+	padding: 5px;
+	background-color: #eeeeee;
+}
+
+main
+{
+	border: 2px solid black;
+	border-top: none;
+	border-bottom: none;
+	background-color: #838383;
+	padding: 10px;
+	max-width: 50vw;
+	min-width: 100px;
+}
+
+.testimonial .name
+{
+	font-weight: bold;
+	display: inline-block;
+	width: 100%;
+	text-align: right;
+}
+
+blockquote
+{
+	quotes: "\201C""\201D""\2018""\2019";
+	border-left: 2px solid #333333;
+	margin: 10px 0 5px 5px;
+	padding: 7px 0px 7px 3px;
+}
+
+blockquote::before
+{
+	content: open-quote;
+	font-size: 2em;
+}
+
+blockquote::after
+{
+	content: close-quote;
+	font-size: 2em;
+}
+
+footer
+{
+	width: 100%;
+	border-top: 2px solid black;
+	text-align: center;
+	font-family: monospace;
+	background-color: #1d1d1d;
+	padding: 10px 0 10px 0;
+	color: #e3e3e3;
+}
