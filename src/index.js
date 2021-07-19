@@ -5,6 +5,12 @@ import about from "./modules/about";
 import './style.css';
 
 const mainEl = document.querySelector('main');
+const pages = {
+	home,
+	menu,
+	contact,
+	about,
+}
 
 let currPage = 'home';
 
@@ -26,31 +32,13 @@ function setEventListeners()
 		{
 			currPage = tabName;
 
-			let newMainChildren;
-			switch(tabName)
+			let content = pages[tabName];
+			if(content)
 			{
-				case 'home':
-					newMainChildren = home;
-				 	break;
-					 
-				case 'menu':
-					newMainChildren = menu;
-					break;
-					 
-				case 'contact':
-					newMainChildren = contact;
-					break;
-					 
-				case 'about':
-					newMainChildren = about;
-					break;
-
-				default:
-					return;
+				removeChildren(mainEl);
+				mainEl.append(...content)
 			}
 
-			removeChildren(mainEl);
-			mainEl.append(...newMainChildren)
 		}
 	}
 
