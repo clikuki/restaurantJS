@@ -134,7 +134,7 @@ export default (() =>
 {
 	const welcomeEl = component('h1', {
 		class: [
-			'welcome'
+			'underline'
 		],
 	}, [
 		'Welcome to Restaurant!'
@@ -144,12 +144,10 @@ export default (() =>
 	const locationEl = locationComponent();
 	const scheduleEl = scheduleComponent();
 
-	return () => {
-		return [
-			welcomeEl,
-			chooseRestaurantEl,
-			locationEl,
-			scheduleEl,
-		]
-	}
+	return [
+		welcomeEl,
+		chooseRestaurantEl,
+		locationEl,
+		scheduleEl,
+	]
 })()

@@ -2,6 +2,7 @@
 {
 	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	background-color: #f3f3f3;
+	height: 100%;
 }
 
 body
@@ -11,6 +12,7 @@ body
 	justify-content: center;
 	align-items: center;
 	margin: 0;
+	min-height: 100%;
 }
 
 header
@@ -92,7 +94,7 @@ a:focus-visible {
 	outline: none;
 }
 
-.welcome
+.underline
 {
 	text-align: center;
 	margin-top: 5px;
@@ -122,7 +124,15 @@ main
 	background-color: #838383;
 	padding: 10px;
 	max-width: 50vw;
-	min-width: 100px;
+	min-width: 200px;
+	flex-grow: 1;
+}
+
+.verticalCenter
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .testimonial .name

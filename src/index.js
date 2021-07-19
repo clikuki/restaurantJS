@@ -1,13 +1,16 @@
-import homePage from "./modules/homePage";
+import home from "./modules/home";
+import menu from "./modules/menu";
+import contact from "./modules/contact";
+import about from "./modules/about";
 import './style.css';
 
 const mainEl = document.querySelector('main');
 
 let currPage = 'home';
 
-function setHomePage()
+function setDefaultPage()
 {
-	mainEl.append(...homePage());
+	mainEl.append(...home);
 }
 
 function setEventListeners()
@@ -22,17 +25,31 @@ function setEventListeners()
 		if(currPage !== tabName)
 		{
 			currPage = tabName;
-			removeChildren(mainEl);
 
 			let newMainChildren;
 			switch(tabName)
 			{
 				case 'home':
-				default:
-					newMainChildren = homePage();
+					newMainChildren = home;
 				 	break;
+					 
+				case 'menu':
+					newMainChildren = menu;
+					break;
+					 
+				case 'contact':
+					newMainChildren = contact;
+					break;
+					 
+				case 'about':
+					newMainChildren = about;
+					break;
+
+				default:
+					return;
 			}
 
+			removeChildren(mainEl);
 			mainEl.append(...newMainChildren)
 		}
 	}
@@ -52,7 +69,7 @@ function removeChildren(node)
 
 function initialize()
 {
-	setHomePage();
+	setDefaultPage();
 	setEventListeners();
 }
 
