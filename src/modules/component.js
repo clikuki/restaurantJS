@@ -1,4 +1,4 @@
-export default function(tag, options = {}, ...children)
+export default function(tag, options = {}, children)
 {
 	const element = document.createElement(tag);
 
@@ -23,7 +23,7 @@ export default function(tag, options = {}, ...children)
 		}
 	}
 
-	if(children.length > 0)
+	if(children && children.length > 0)
 	{
 		element.append(...children);
 	}
