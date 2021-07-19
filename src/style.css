@@ -124,7 +124,7 @@ main
 	background-color: #838383;
 	padding: 10px;
 	max-width: 50vw;
-	min-width: 200px;
+	min-width: 30vw;
 	flex-grow: 1;
 }
 
