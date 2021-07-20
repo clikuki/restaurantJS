@@ -1,7 +1,6 @@
 import switchTab from "./modules/switchTab";
 import './style.css';
 
-const mainEl = document.querySelector('main');
 const defaultTab = 'home';
 
 function setEventListeners()
@@ -10,7 +9,7 @@ function setEventListeners()
 	{
 		const tabName = e.target.textContent.toLowerCase();
 	
-		switchTab(tabName, mainEl)
+		switchTab(tabName)
 	}
 
 	const navBtns = document.querySelectorAll('#headerNav button');
@@ -22,7 +21,7 @@ function setEventListeners()
 
 function initialize()
 {
-	switchTab(defaultTab, mainEl);
+	switchTab(defaultTab);
 	setEventListeners();
 }
 

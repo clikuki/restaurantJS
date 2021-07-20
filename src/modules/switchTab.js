@@ -3,6 +3,8 @@ import menu from "./menu";
 import contact from "./contact";
 import about from "./about";
 
+const mainEl = document.querySelector('main');
+
 let currTab = null;
 const tabs = {
 	home,
@@ -18,7 +20,7 @@ function removeChildren(node)
 	}
 }
 
-export default function(tabName, mainEl)
+export default function(tabName)
 {
 	if(currTab !== tabName)
 	{

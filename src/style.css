@@ -44,13 +44,31 @@ header h1
 	justify-content: space-around;
 }
 
-header button
+button
 {
 	font-size: medium;
+	padding: 3px;
+	border-radius: 5px;
+	border: 1px solid black;
+	border: 1px solid rgb(190, 149, 149);
+}
+
+button:hover
+{
+	cursor: pointer;
+} 
+
+button:focus-visible
+{
+	outline: none;
+}
+
+header button
+{
 	background-color: #3d3d3d;
 	color: inherit;	
 	border-radius: 5px 5px 0 0;
-	border: 1px solid black;
+	border: inherit;
 	border-bottom: none;
 	padding: 3px;
 	width: 20%;
@@ -62,13 +80,7 @@ header button:hover
 	animation-duration: 500ms;
 	animation-fill-mode: forwards;
 	animation-name: widen;
-	cursor: pointer;
 } 
-
-header button:focus-visible
-{
-	outline: none;
-}
 
 @keyframes widen
 {
@@ -133,6 +145,26 @@ main
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+
+.horizontalCenter
+{
+	display: flex;
+	justify-content: center;
+}
+
+#switchTabBtn
+{
+	border: black;
+	background-color: #3d3d3d;
+	transition: all 80ms ease-in;
+	color: #e3e3e3;
+}
+
+#switchTabBtn:hover
+{
+	background-color: #5d5d5d;
+	transform: scale(1.1);
 }
 
 .testimonial .name
