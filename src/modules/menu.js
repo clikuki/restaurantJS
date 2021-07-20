@@ -19,7 +19,8 @@ function menuComponent()
 			'verticalCenter'
 		],
 		style: {
-			['min-height']: '40vw',
+			['min-height']: '40vh',
+			['max-height']: '50vh',
 		}
 	}, [
 		apologyBox,

@@ -126,7 +126,7 @@ main
 	max-width: 50vw;
 	min-width: 30vw;
 	flex-grow: 1;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .verticalCenter
