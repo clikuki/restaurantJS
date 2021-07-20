@@ -123,8 +123,7 @@ main
 	border-bottom: none;
 	background-color: #838383;
 	padding: 10px;
-	max-width: 50vw;
-	min-width: 30vw;
+	width: 50vw;
 	flex-grow: 1;
 	overflow-y: auto;
 }

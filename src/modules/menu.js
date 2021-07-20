@@ -21,12 +21,37 @@ function menuComponent()
 		style: {
 			['min-height']: '40vh',
 			['max-height']: '50vh',
+			['text-align']: 'center',
 		}
 	}, [
 		apologyBox,
 	]);
 
 	return menuEl;
+}
+
+function fakeFormComponent()
+{
+	const adressInputEl = component('input', {
+		id: 'adressInput',
+		placeholder: 'Enter your adress here!',
+	});
+
+	const submitBtnEl = component('button', {
+		type: 'submit',
+	}, ['Submit']);
+
+	const fakeFormEl = component('form', {
+		id: 'form',
+		class: [
+			'box',
+		]
+	}, [
+		adressInputEl,
+		submitBtnEl,
+	]);
+
+	return fakeFormEl;
 }
 
 export default (() =>

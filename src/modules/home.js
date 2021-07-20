@@ -1,4 +1,5 @@
 import component from "./component";
+import bulletMaker from "./bulletMaker";
 
 function chooseRestaurantComponent()
 {
@@ -116,18 +117,6 @@ function scheduleComponent()
 	])
 
 	return scheduleEl;
-}
-
-function bulletMaker(bullets)
-{
-	return bullets.map((bullet) =>
-	{
-		const liEl = component('li');
-		const liContent = Array.isArray(bullet) ? bullet : [bullet];
-
-		liEl.append(...liContent);
-		return liEl;
-	});
 }
 
 export default (() =>
