@@ -2,6 +2,7 @@ import switchTab from "./modules/switchTab";
 import './style.css';
 
 const mainEl = document.querySelector('main');
+const defaultTab = 'home';
 
 function setEventListeners()
 {
@@ -21,7 +22,7 @@ function setEventListeners()
 
 function initialize()
 {
-	switchTab('home', mainEl);
+	switchTab(defaultTab, mainEl);
 	setEventListeners();
 }
 
