@@ -5,38 +5,38 @@ import about from "./modules/about";
 import './style.css';
 
 const mainEl = document.querySelector('main');
-const pages = {
+const tabs = {
 	home,
 	menu,
 	contact,
 	about,
 }
 
-let currPage = 'home';
+let currTab = 'home';
 
-function setDefaultPage()
+function setToDefaultTab()
 {
 	mainEl.append(...home);
 }
 
 function setEventListeners()
 {
-	const headerNav = document.querySelector('#headerNav');
-	const navBtns = headerNav.querySelectorAll('button');
+	const navBtns = document.querySelectorAll('#headerNav button');
 
 	function callback(e)
 	{
 		const tabName = e.target.textContent.toLowerCase();
 
-		if(currPage !== tabName)
+		if(currTab !== tabName)
 		{
-			currPage = tabName;
+			currTab = tabName;
 
-			let content = pages[tabName];
+			let content = tabs[tabName];
 			if(content)
 			{
 				removeChildren(mainEl);
 				mainEl.append(...content)
+				mainEl.scrollTop = 0;
 			}
 
 		}
@@ -57,7 +57,7 @@ function removeChildren(node)
 
 function initialize()
 {
-	setDefaultPage();
+	setToDefaultTab();
 	setEventListeners();
 }
 
