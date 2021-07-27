@@ -36,6 +36,11 @@ header h1
 	text-shadow: -4px 4px #3d3d3d;
 }
 
+nav ul
+{
+	list-style-type: none;
+}
+
 #headerNav
 {
 	width: 60%;
@@ -46,14 +51,15 @@ header h1
 
 button
 {
+	all: unset;
 	font-size: medium;
-	padding: 3px;
+	/* padding: 3px;
 	border-radius: 5px;
-	border: 1px solid black;
-	border: 1px solid rgb(190, 149, 149);
+	border: 1px solid black; */
 }
 
-button:hover
+button:hover,
+button:focus
 {
 	cursor: pointer;
 } 
@@ -76,6 +82,7 @@ header button
 }
 
 header button:hover
+header button:focus
 {
 	animation-duration: 500ms;
 	animation-fill-mode: forwards;

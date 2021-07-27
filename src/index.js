@@ -1,4 +1,5 @@
 import switchTab from "./modules/switchTab";
+import './normalize.css';
 import './style.css';
 
 const defaultTab = 'home';
