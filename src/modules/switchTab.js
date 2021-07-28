@@ -3,7 +3,7 @@ import menu from "./menu";
 import contact from "./contact";
 import about from "./about";
 
-const mainEl = document.querySelector('main');
+const contentDiv = document.querySelector('#content');
 
 let currTab = null;
 const tabs = {
@@ -29,9 +29,9 @@ export default function(tabName)
 		let content = tabs[tabName];
 		if(content)
 		{
-			removeChildren(mainEl);
-			mainEl.append(...content)
-			mainEl.scrollTop = 0;
+			removeChildren(contentDiv);
+			contentDiv.append(...content)
+			contentDiv.scrollTop = 0;
 		}
 
 	}
