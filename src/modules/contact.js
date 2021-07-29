@@ -11,11 +11,7 @@ function phoneNumComponent()
 		'Phone num: +1-254-233-423',
 	]));
 
-	const phoneNumEl = component('div', {
-		class: [
-			'box',
-		],
-	}, [
+	const phoneNumEl = component('div', {}, [
 		h5El,
 		contactListEl,
 	])
@@ -46,11 +42,7 @@ function orderListComponent()
 
 	const switchBtnDiv = switchToMenuBtnComponent();
 
-	const orderListEl = component('div', {
-		class: [
-			'box',
-		]
-	}, [
+	const orderListEl = component('div', {}, [
 		h5El,
 		listEl,
 		switchBtnDiv,
@@ -79,10 +71,8 @@ function switchToMenuBtnComponent()
 
 export default (() =>
 {
-	const h1El = component('h1', {
-		class: [
-			'underline',
-		]
+	const tabTitle = component('h1', {
+		class: [ 'tabTitle' ],
 	}, [ 'Contact' ]);
 
 	const phoneNumEl = phoneNumComponent();
@@ -90,7 +80,7 @@ export default (() =>
 	const orderListEl = orderListComponent();
 
 	return [
-		h1El,
+		tabTitle,
 		phoneNumEl,
 		orderListEl,
 	];

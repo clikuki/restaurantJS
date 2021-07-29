@@ -2,15 +2,13 @@ import component from "./component";
 
 export default (() =>
 {
-	const h1El = component('h1', {
-		class: [
-			'underline',
-		]
+	const tabTitle = component('h1', {
+		class: [ 'tabTitle' ],
 	}, [
 		'About',
 	]);
 
 	return [
-		h1El,
+		tabTitle,
 	];
 })()

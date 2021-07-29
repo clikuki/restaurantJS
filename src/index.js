@@ -6,7 +6,7 @@ const defaultTab = 'home';
 
 function setEventListeners()
 {
-	const callBackFn = (e) =>
+	const clickCB = (e) =>
 	{
 		const tabName = e.target.textContent.toLowerCase();
 		const parent = e.target.parentElement;
@@ -24,7 +24,7 @@ function setEventListeners()
 	const navBtns = document.querySelectorAll('#headerNav li');
 	for(const navBtn of navBtns)
 	{
-		navBtn.addEventListener('click', callBackFn);
+		navBtn.addEventListener('click', clickCB);
 	}
 }
 

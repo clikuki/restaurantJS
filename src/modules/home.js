@@ -3,27 +3,22 @@ import bulletMaker from "./bulletMaker";
 
 function chooseRestaurantComponent()
 {
-	function testimoniesMaker(testimonies)
+	const testimonyMaker = (testimonies) =>
 	{
-		const testimonyContainer = component('div', {
-			id: 'testimonies',
-		});
+		const testimonyContainer = component('div', { id: 'testimonyContainer' });
 
-		for(const {quote, customer} of testimonies)
+		for(const {quote, name} of testimonies)
 		{
 			const testimonyBox = component('div', {
-				class: [
-					'testimonial',
-					'box',
-				]
+				class: [ 'testimony' ]
 			});
 
-			const quoteEl = component('blockquote', {}, quote);
+			const quoteEl = component('blockquote', {
+				class: [ 'quote' ]
+			}, quote);
 			const customerEl = component('span', {
-				class: [
-					'name'
-				]
-			}, customer);
+				class: [ 'name' ]
+			}, name);
 
 			testimonyBox.append(quoteEl, customerEl);
 			testimonyContainer.append(testimonyBox);
@@ -32,8 +27,12 @@ function chooseRestaurantComponent()
 		return testimonyContainer;
 	}
 
-	const h5El = component('h5', {}, 'Why choose Restaurant? Because...');
-	const listEl = component('ul', {}, bulletMaker([
+	const chooseRestaurantEl = component('section')
+
+	const heading = component('h2', {
+		class: [ 'heading' ]
+	}, 'Why choose Restaurant? Because...');
+	const reasonsList = component('ul', {}, bulletMaker([
 			'We have a wide selection of fooooooods!',
 			[
 				'Our staff is kind and ready to serve you ',
@@ -43,60 +42,54 @@ function chooseRestaurantComponent()
 		])
 	);
 
-	const spanEl = component('span', {}, ['Not convinced? Hear from our other "customers"!']);
-	const testimoniesDiv = testimoniesMaker([
+	const unconvincedSpan = component('span', {}, ['Not convinced? Hear from our other "customers"!']);
+	const testimoniesDiv = testimonyMaker([
 		{
 			quote: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, voluptates.',
-			customer: 'Julius Caesar',
+			name: 'Julius Caesar',
 		},
 		{
 			quote: 'Very good food! 10/10, will eat at again!',
-			customer: 'Noone',
+			name: 'Noone',
 		},
 		{
 			quote: 'Do I get paid for this?',
-			customer: 'some guy we told we\'d pay',
+			name: 'some guy we told we\'d pay',
 		},
 	]);
 
-	const chooseRestaurantEl = component('div', {
-		class: [
-			'box'
-		],
-		id: 'chooseRestaurant',
-	}, [
-		h5El, listEl, spanEl, testimoniesDiv
-	])
-
+	chooseRestaurantEl.append(
+		heading, reasonsList, unconvincedSpan, testimoniesDiv
+	);
 	return chooseRestaurantEl;
 }
 
 function locationComponent()
 {
-	const h5El = component('h5', {}, [
-		'Find us at:' 
-	]);
+	const locationEl = component('section');
 
-	const spanEl = component('span', {}, [
-		'456 Dark Alley, ShadyVille, Earth'
-	]);
-
-	const locationEl = component('div', {
-		class: [
-			'box',
-		],
-		id: 'location',
+	const heading = component('h2', {
+		class: [ 'heading' ]
 	}, [
-		h5El,
-		spanEl,
+		'Find us at' 
 	]);
 
+	const address = component('span', {}, [
+		'You can find us at ', 
+		component('b', {}, [ '456 Dark Alley, ShadyVille, Earth' ])
+	]);
+
+	locationEl.append(heading, address);
 	return locationEl;
 }
 
 function scheduleComponent()
 {
-	const h5El = component('h5', {}, [
+	const scheduleEl = component('section')
+
+	const heading = component('h2', {
+		class: [ 'heading' ]
+	}, [
 		'Working Hours',
 	]);
 
@@ -106,25 +99,14 @@ function scheduleComponent()
 		'Weekends: Sorry, no working hours!',
 	]))
 
-	const scheduleEl = component('div', {
-		class: [
-			'box',
-		],
-		id: 'schedule',
-	}, [
-		h5El,
-		listEl,
-	])
-
+	scheduleEl.append(heading, listEl);
 	return scheduleEl;
 }
 
 export default (() =>
 {
 	const welcomeEl = component('h1', {
-		class: [
-			'underline'
-		],
+		class: [ 'tabTitle' ],
 	}, [
 		'Welcome to Restaurant!'
 	]);

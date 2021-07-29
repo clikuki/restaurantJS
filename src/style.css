@@ -12,7 +12,7 @@
 	background-color: var(--main-bg-color);
 }
 
-/* || General styling */
+/* || Main page styling */
 html, body { height: 100%; }
 header, footer { background-color: var(--footerHeader-bg-color);} 
 
@@ -66,7 +66,6 @@ header > h1
 
 #headerNav > ul
 {
-	--li-top-bottom-padding: 5px;
 	all: unset;
 	list-style-type: none;
 	display: flex;
@@ -80,14 +79,16 @@ header > h1
 	display: inline-block;
 	text-align: center;
 	border-radius: 10px 10px 0 0;
-	background-color: #e3e3e3;
-	margin: 0 10px 0 10px;
+	background-color: #d0d0d0;
+	margin: 0 20px 0 20px;
 	user-select: none;
-	transition: flex-grow .5s ease-in-out;
-	padding: var(--li-top-bottom-padding) 10px var(--li-top-bottom-padding) 10px;
+	transition: flex-grow .5s ease-in-out, background-color .5s ease-in;
+	padding: 5px 10px 5px 10px;
 }
 
-#headerNav li:hover:not(.curTab)
+/* don't style it if it is the current tab */
+#headerNav li:not(.curTab):hover,
+#headerNav li:not(.curTab):focus-visible
 {
 	flex-grow: .3;
 	cursor: pointer;
@@ -96,6 +97,7 @@ header > h1
 #headerNav .curTab
 {
 	flex-grow: .5;
+	background-color: #eeeeee;
 	cursor: default;
 }
 
@@ -109,7 +111,7 @@ main
 
 #content
 {
-	padding-left: 10px;
+	padding: 0 10px 0 10px;
 }
 
 footer
@@ -119,6 +121,61 @@ footer
 	padding: 10px 0 10px 0;
 	color: var(--footer-font-color);
 	font-family: var(--footer-font-family);
+}
+
+/* || Styling within content box */
+.tabTitle
+{
+	text-align: center;
+}
+
+.heading
+{
+	border-bottom: 2px solid black;
+}
+
+#testimonyContainer
+{
+	margin: 10px;
+}
+
+.testimony
+{
+	background-color: #d3d3d3;
+	margin: 10px 0 10px 0;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.testimony > .quote
+{
+	quotes: "\201C""\201D""\2018""\2019";
+	padding: 5px 0 5px 5px;
+	margin: 5px 0 0 5px;
+	border-left: 2px solid black;
+}
+
+.testimony > .quote::before
+{
+	content: open-quote;
+}
+
+.testimony > .quote::after
+{
+	content: close-quote;
+}
+
+.testimony > .name
+{
+	text-align: end;
+	display: inline-block;
+	font-weight: bold;
+	width: 100%;
+}
+
+.testimony > .name::before
+{
+	content: '- ';
 }
 
 /* || Utilities */
