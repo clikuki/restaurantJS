@@ -6,7 +6,9 @@ function phoneNumComponent()
 {
 	const mainComponent = component('section')
 
-	const heading = component('h2', {}, [ 'Contact information:' ]);
+	const heading = component('h2', {
+		class: [ 'heading' ]
+	}, [ 'Contact information' ]);
 
 	const contactList = component('ul', {}, bulletMaker([
 		'Email: shadyGuy@darkAlley.net',
@@ -17,11 +19,17 @@ function phoneNumComponent()
 	return mainComponent;
 }
 
-function orderListComponent()
+function orderMethodListComponent()
 {
-	const mainComponent = component('section');
+	const mainComponent = component('section', {
+		class: [
+			'btnCenterBottom'
+		],
+	});
 
-	const heading = component('h2', {}, [ 'To order from us:' ]);
+	const heading = component('h2', {
+		class: [ 'heading' ]
+	}, [ 'To order from us' ]);
 
 	const orderMethodsList = component('ul', {}, [
 		...bulletMaker([
@@ -50,13 +58,13 @@ function switchToMenuBtnComponent()
 {
 	const mainComponent = component('div', {
 		class: [
-			'horizontalCenter',
-		],
+			'divCenter'
+		]
 	});
 
 	const switchToMenuBtn = component('button', {
 		onclick: switchTab.bind(null, 'menu'),
-		id: 'switchTabBtn',
+		id: 'goToMenu',
 	}, [
 		'Order from Menu!'
 	]);
@@ -73,7 +81,7 @@ export default (() =>
 
 	const phoneNumEl = phoneNumComponent();
 
-	const orderListEl = orderListComponent();
+	const orderListEl = orderMethodListComponent();
 
 	return [
 		tabTitle,

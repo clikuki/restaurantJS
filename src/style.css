@@ -118,6 +118,7 @@ footer
 
 .heading
 {
+	padding-left: 10px;
 	border-bottom: 2px solid black;
 }
 
@@ -172,7 +173,27 @@ footer
 	border-radius: 10px;
 }
 
+#goToMenu
+{
+	background-color: #d3d3d3;
+	text-align: center;
+	padding: 10px;
+	font-weight: bold;
+	transition: all .2s ease-in-out;
+}
+
+#goToMenu:hover
+{
+	background-color: #c3c3c3;
+}
+
 /* || Utilities */
+.divCenter
+{
+	display: flex;
+	justify-content: center;
+}
+
 button
 {
 	all: unset;
