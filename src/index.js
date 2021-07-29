@@ -6,7 +6,7 @@ const defaultTab = 'home';
 
 function setEventListeners()
 {
-	const clickCB = (e) =>
+	const mainCB = e =>
 	{
 		const tabName = e.target.textContent.toLowerCase();
 		const parent = e.target.parentElement;
@@ -21,10 +21,19 @@ function setEventListeners()
 		e.target.classList.add('curTab');
 	}
 
+	const keyCheck = e =>
+	{
+		if(e.code === 'Space' || e.code === 'Enter')
+		{
+			mainCB(e);
+		}
+	}
+
 	const navBtns = document.querySelectorAll('#headerNav li');
 	for(const navBtn of navBtns)
 	{
-		navBtn.addEventListener('click', clickCB);
+		navBtn.addEventListener('click', mainCB);
+		navBtn.addEventListener('keydown', keyCheck);
 	}
 }
 

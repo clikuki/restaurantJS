@@ -37,7 +37,6 @@ header > h1
 	color: var(--headerH1-font-color);
 }
 
-/* || Header nav styling */
 #headerNav, #headerNav > ul
 {
 	width: 80%;
@@ -66,18 +65,26 @@ header > h1
 	padding: 5px 10px 5px 10px;
 }
 
-/* don't style it if it is the current tab */
-#headerNav li:not(.curTab):hover,
-#headerNav li:not(.curTab):focus-visible
+#headerNav li:hover,
+#headerNav li:focus-visible
 {
 	flex-grow: .3;
 	cursor: pointer;
+	outline: none;
 }
 
 #headerNav .curTab
 {
 	flex-grow: .5;
 	background-color: #eeeeee;
+	cursor: default;
+}
+
+/* If current tab, override with these properties */
+#headerNav .curTab:hover,
+#headerNav .curTab:focus-visible
+{
+	flex-grow: .6;
 	cursor: default;
 }
 
@@ -178,7 +185,7 @@ a
 
 a:focus-visible
 {
-	outline: none;
+	outline: 2px dotted white;
 }
 
 /* || Media queries */
