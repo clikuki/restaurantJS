@@ -8,7 +8,9 @@ export default (() =>
 		'Menu'
 	]);
 
-	const apologyH4 = component('h4', {}, [
+	const apology = component('h4', {
+		id: 'apology',
+	}, [
 		'Sorry, but we are out of ingredients!',
 		component('br'),
 		'We apologize for the inconvenience!',
@@ -16,6 +18,6 @@ export default (() =>
 
 	return [
 		tabTitle,
-		apologyH4,
+		apology,
 	]
 })();

@@ -165,6 +165,13 @@ footer
 	content: '- ';
 }
 
+#apology
+{
+	background-color: #d3d3d3;
+	padding: 10px;
+	border-radius: 10px;
+}
+
 /* || Utilities */
 button
 {

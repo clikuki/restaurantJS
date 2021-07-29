@@ -27,7 +27,7 @@ function chooseRestaurantComponent()
 		return testimonyContainer;
 	}
 
-	const chooseRestaurantEl = component('section')
+	const mainComponent = component('section')
 
 	const heading = component('h2', {
 		class: [ 'heading' ]
@@ -58,15 +58,15 @@ function chooseRestaurantComponent()
 		},
 	]);
 
-	chooseRestaurantEl.append(
+	mainComponent.append(
 		heading, reasonsList, unconvincedSpan, testimoniesDiv
 	);
-	return chooseRestaurantEl;
+	return mainComponent;
 }
 
 function locationComponent()
 {
-	const locationEl = component('section');
+	const mainComponent = component('section');
 
 	const heading = component('h2', {
 		class: [ 'heading' ]
@@ -79,13 +79,13 @@ function locationComponent()
 		component('b', {}, [ '456 Dark Alley, ShadyVille, Earth' ])
 	]);
 
-	locationEl.append(heading, address);
-	return locationEl;
+	mainComponent.append(heading, address);
+	return mainComponent;
 }
 
 function scheduleComponent()
 {
-	const scheduleEl = component('section')
+	const mainComponent = component('section')
 
 	const heading = component('h2', {
 		class: [ 'heading' ]
@@ -93,19 +93,19 @@ function scheduleComponent()
 		'Working Hours',
 	]);
 
-	const listEl = component('ul', {}, bulletMaker([
+	const schedule = component('ul', {}, bulletMaker([
 		'Monday, Wednesday, Friday: 6AM - 6PM',
 		'Tuesday, Thursday: 7AM - 5PM',
 		'Weekends: Sorry, no working hours!',
 	]))
 
-	scheduleEl.append(heading, listEl);
-	return scheduleEl;
+	mainComponent.append(heading, schedule);
+	return mainComponent;
 }
 
 export default (() =>
 {
-	const welcomeEl = component('h1', {
+	const greeting = component('h1', {
 		class: [ 'tabTitle' ],
 	}, [
 		'Welcome to Restaurant!'
@@ -116,7 +116,7 @@ export default (() =>
 	const scheduleEl = scheduleComponent();
 
 	return [
-		welcomeEl,
+		greeting,
 		chooseRestaurantEl,
 		locationEl,
 		scheduleEl,

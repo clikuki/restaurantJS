@@ -8,17 +8,16 @@ function setEventListeners()
 {
 	const mainCB = e =>
 	{
-		const tabName = e.target.textContent.toLowerCase();
-		const parent = e.target.parentElement;
+		// const parent = e.target.parentElement;
 
-		switchTab(tabName);
+		switchTab(e);
 
-		for(const child of parent.children)
-		{
-			child.classList.remove('curTab');
-		}
+		// for(const child of parent.children)
+		// {
+		// 	child.classList.remove('curTab');
+		// }
 
-		e.target.classList.add('curTab');
+		// e.target.classList.add('curTab');
 	}
 
 	const keyCheck = e =>

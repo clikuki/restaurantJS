@@ -4,26 +4,26 @@ import switchTab from "./switchTab";
 
 function phoneNumComponent()
 {
-	const h5El = component('h5', {}, [ 'Contact information:' ]);
+	const mainComponent = component('section')
 
-	const contactListEl = component('ul', {}, bulletMaker([
+	const heading = component('h2', {}, [ 'Contact information:' ]);
+
+	const contactList = component('ul', {}, bulletMaker([
 		'Email: shadyGuy@darkAlley.net',
 		'Phone num: +1-254-233-423',
 	]));
 
-	const phoneNumEl = component('div', {}, [
-		h5El,
-		contactListEl,
-	])
-
-	return phoneNumEl;
+	mainComponent.append( heading, contactList );
+	return mainComponent;
 }
 
 function orderListComponent()
 {
-	const h5El = component('h5', {}, [ 'To order from us:' ]);
+	const mainComponent = component('section');
 
-	const listEl = component('ul', {}, [
+	const heading = component('h2', {}, [ 'To order from us:' ]);
+
+	const orderMethodsList = component('ul', {}, [
 		...bulletMaker([
 			[
 				'Go to our restaurant at ',
@@ -40,33 +40,29 @@ function orderListComponent()
 		]),
 	]);
 
-	const switchBtnDiv = switchToMenuBtnComponent();
+	const switchToMenuTabBtn = switchToMenuBtnComponent();
 
-	const orderListEl = component('div', {}, [
-		h5El,
-		listEl,
-		switchBtnDiv,
-	]);
-
-	return orderListEl;
+	mainComponent.append( heading, orderMethodsList, switchToMenuTabBtn );
+	return mainComponent;
 }
 
 function switchToMenuBtnComponent()
 {
-	const switchToMenuBtn = component('button', {
-		onclick: switchTab.bind(null, 'menu'),
-		id: 'switchTabBtn',
-	}, [ 'Go to Menu!' ]);
-
-	const divEl = component('div', {
+	const mainComponent = component('div', {
 		class: [
 			'horizontalCenter',
 		],
-	}, [
-		switchToMenuBtn,
-	]); 
+	});
 
-	return divEl;
+	const switchToMenuBtn = component('button', {
+		onclick: switchTab.bind(null, 'menu'),
+		id: 'switchTabBtn',
+	}, [
+		'Order from Menu!'
+	]);
+
+	mainComponent.append( switchToMenuBtn );
+	return mainComponent;
 }
 
 export default (() =>
