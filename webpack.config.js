@@ -8,6 +8,9 @@ module.exports = {
 		index: './src/index.js',
 	},
 	devtool: 'inline-source-map',
+	devServer: {
+		contentBase: './dist',
+	},
 	plugins: [
 		new HtmlWebpackPlugin({
 			title: 'RestaurantJS',
