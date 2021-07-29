@@ -44,26 +44,6 @@ header > h1
 	max-width: 600px;
 }
 
-@media screen and ( max-width: 650px ) {
-	#headerNav, #headerNav > ul
-	{
-		width: 100%;
-		max-width: none;
-	}
-
-	#headerNav > ul > li:first-child
-	{
-		border-top-left-radius: 0;
-		margin-left: 0;
-	}
-
-	#headerNav > ul > li:last-child
-	{
-		border-top-right-radius: 0;
-		margin-right: 0;
-	}
-}
-
 #headerNav > ul
 {
 	all: unset;
@@ -199,4 +179,25 @@ a
 a:focus-visible
 {
 	outline: none;
+}
+
+/* || Media queries */
+@media screen and ( max-width: 650px ) {
+	#headerNav, #headerNav > ul
+	{
+		width: 100%;
+		max-width: none;
+	}
+
+	#headerNav > ul > li:first-child
+	{
+		border-top-left-radius: 0;
+		margin-left: 0;
+	}
+
+	#headerNav > ul > li:last-child
+	{
+		border-top-right-radius: 0;
+		margin-right: 0;
+	}
 }
