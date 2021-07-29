@@ -8,21 +8,14 @@ function setEventListeners()
 {
 	const mainCB = e =>
 	{
-		// const parent = e.target.parentElement;
-
-		switchTab(e);
-
-		// for(const child of parent.children)
-		// {
-		// 	child.classList.remove('curTab');
-		// }
-
-		// e.target.classList.add('curTab');
+		const tabName = e.target.textContent.toLowerCase();
+		switchTab(tabName);
 	}
 
 	const keyCheck = e =>
 	{
-		if(e.code === 'Space' || e.code === 'Enter')
+		const keysArray = ['Space', 'Enter'];
+		if(keysArray.includes(e.code))
 		{
 			mainCB(e);
 		}

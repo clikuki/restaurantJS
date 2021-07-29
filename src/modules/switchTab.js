@@ -2,9 +2,11 @@ import home from "./home";
 import menu from "./menu";
 import contact from "./contact";
 import about from "./about";
+import component from "./component";
 
-const contentDiv = document.querySelector('#content');
+const mainElem = document.querySelector('main');
 const navBtns = document.querySelectorAll('#headerNav li');
+const curTabClass = 'curTab';
 
 let currTab = null;
 const tabs = {
@@ -14,58 +16,47 @@ const tabs = {
 	about,
 }
 
-function removeChildren(node)
+// adds curTab class to the current tab and removes the previous tabs class
+const switchCurTabClass = tabName =>
 {
-	while (node.firstChild) {
-		node.removeChild(node.lastChild);
+	// Get the tab btn with a class of .curTab and remove it
+	const prevTabBtn = document.querySelector(`.${curTabClass}`);
+	prevTabBtn.classList.remove(curTabClass);
+
+	for(const btn of navBtns)
+	{
+		const btnName = btn.textContent.toLowerCase();
+		if(btnName === tabName)
+		{
+			btn.classList.add(curTabClass);
+			return;
+		}
 	}
 }
 
-function addCurTabClass(e, isTabName)
+// swaps last child/only child of main elem with the provided content
+const mainElemSwapChild = content =>
 {
-	if(isTabName)
-	{
-		for(const btn of navBtns)
-		{
-			if(btn.textContent.toLowerCase() === e)
-			{
-				btn.classList.add('curTab');
-			}
-			else
-			{
-				btn.classList.remove('curTab');
-			}
-		}
-	}
-	else
-	{
-		const children = e.target.parentElement.children;
-		for(const child of children)
-		{
-			child.classList.remove('curTab');
-		}
-	
-		e.target.classList.add('curTab');
-	}
+	mainElem.replaceChild(content, mainElem.lastChild);
 }
 
-export default function(e)
+export default function(tabName)
 {
-	const eIsString = typeof e === 'string';
-	const tabName = eIsString ? e : e.target.textContent.toLowerCase();
-
 	if(currTab !== tabName)
 	{
 		currTab = tabName;
 
-		let content = tabs[tabName];
-		if(content)
+		let children = tabs[tabName];
+		if(children)
 		{
-			addCurTabClass(e, eIsString);
-			removeChildren(contentDiv);
-			contentDiv.append(...content)
-			contentDiv.scrollTop = 0;
-		}
+			// create new content element and fill with children
+			const content = component('div', {
+				id: 'content'
+			}, children);
 
+			switchCurTabClass(tabName);
+			mainElemSwapChild(content);
+			mainElem.scrollTop = 0; // scrolls to top in case the last tab was long
+		}
 	}
 }
