@@ -1,6 +1,6 @@
-const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
 	mode: 'development',
@@ -28,7 +28,11 @@ module.exports = {
 			  		MiniCssExtractPlugin.loader, "css-loader"
 				],
 			},
-		],
+			{
+				test: /\.(png|svg|jpg|jpeg|gif)$/i,
+				type: 'asset/resource',
+			},
+		]
 	},
 	output: {
 		filename: '[name].bundle.js',
