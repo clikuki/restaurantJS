@@ -98,7 +98,12 @@ main
 
 #content
 {
-	padding: 0 10px 0 10px;
+	max-width: 60vw;
+}
+
+section > p
+{
+	word-wrap: break-word;
 }
 
 footer
