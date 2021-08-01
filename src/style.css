@@ -256,9 +256,16 @@ footer
 	margin-bottom: 0;
 }
 
-.infoBox span
+.infoBox > h3 > span,
+.infoBox > div > :last-child
 {
 	float: right;
+}
+
+.infoBox > div > span
+{
+	display: inline-block;
+	padding: 10px;
 }
 
 .infoBox > #buttonDiv
