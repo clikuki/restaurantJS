@@ -257,7 +257,7 @@ footer
 }
 
 .infoBox > h3 > span,
-.infoBox > div > :last-child
+.infoBox > div > span:last-child
 {
 	float: right;
 }
