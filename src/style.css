@@ -4,6 +4,7 @@
 	--footerHeader-bg-color: #1d1d1d;
 	--headerH1-font-color: #f2f2f2;
 	--footer-font-color: #ffffff;
+	--box-bg-color: #d3d3d3;
 
 	--headerH1-font-family: 'Times New Roman', Times, serif;
 	--footer-font-family: monospace;
@@ -134,7 +135,7 @@ footer
 
 .testimony
 {
-	background-color: #d3d3d3;
+	background-color: var(--box-bg-color);
 	margin: 10px 0 10px 0;
 	padding: 5px;
 	border-radius: 5px;
@@ -171,6 +172,11 @@ footer
 	content: '- ';
 }
 
+.menuCategory, #cart
+{
+	width: 50vw;
+}
+
 .menuCategory
 {
 	margin: 10px 0;
@@ -180,8 +186,7 @@ footer
 	align-items: center;
 	padding: 10px;
 	border-radius: 10px;
-	width: 50vw;
-	background-color: #d3d3d3;
+	background-color: var(--box-bg-color);
 }
 
 .menuCategory > h2
@@ -199,6 +204,7 @@ footer
 
 .menuItem
 {
+	position: relative;
 	display: flex;
 	justify-content: space-between;
 	align-items: stretch;
@@ -206,14 +212,34 @@ footer
 	width: 100%;
 }
 
-.menuItem > img
+.menuItem > button
 {
-	width: 75px;
-	height: auto;
-	padding: 5px;
-	border-radius: 10px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }
 
+.menuItem > button,
+.infoBox > #buttonDiv > button
+{
+	padding: 3px 20px;
+	background-color: #f3f3f3;
+}
+
+.menuItem > button:hover,
+.infoBox > #buttonDiv > button:hover
+{
+	background-color: #e9e9e9;
+}
+
+.cartItem
+{
+	width: 100%;
+	margin: 10px 0;
+	border-radius: 10px;
+	display: flex;
+	background-color: var(--box-bg-color);
+}
 .infoBox
 {
 	flex-grow: 1;
@@ -235,18 +261,17 @@ footer
 	float: right;
 }
 
+.infoBox > #buttonDiv
+{
+	display: flex;
+	justify-content: space-evenly;
+}
+
 #goToMenu
 {
-	background-color: #d3d3d3;
 	text-align: center;
 	padding: 10px;
 	font-weight: bold;
-	transition: all .2s ease-in-out;
-}
-
-#goToMenu:hover
-{
-	background-color: #c3c3c3;
 }
 
 /* || Utilities */
@@ -256,13 +281,27 @@ footer
 	justify-content: center;
 }
 
+img
+{
+	width: 75px;
+	height: auto;
+	padding: 5px;
+}
+
 button
 {
 	all: unset;
-	background-color: #e3e3e3;
+	user-select: none;
+	background-color: #d3d3d3;
 	cursor: pointer;
 	border-radius: 10px;
 	padding: 5px;
+	transition: all .2s ease-in-out;
+}
+
+button:hover
+{
+	background-color: #c3c3c3;
 }
 
 a
