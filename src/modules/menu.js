@@ -7,113 +7,6 @@ const categoryMaker = menuInfo =>
 {
 	const menuItemMaker = itemInfo =>
 	{
-		const cartItemMaker = itemInfo =>
-		{
-			const mainComponent = component('div', {
-				class: [
-					'cartItem'
-				]
-			})
-		
-			const itemImg = component('img', {
-				src: itemInfo.src,
-			});
-		
-			const title = component('h3', {}, [
-				itemInfo.name,
-				component('span', {}, [
-					`$${itemInfo.price}`
-				])
-			])
-	
-			const numOfPrefix = '# of items: ';
-			const totalPrefix = 'total: $';
-			const numAndPrice = component('div', {}, [
-				component('span', {}, [
-					`${numOfPrefix}1`
-				]),
-				component('span', {}, [
-					`${totalPrefix}${itemInfo.price}`
-				]),
-			]);
-	
-			let itemCounter = 1;
-			const changeItemNum = num =>
-			{
-				const newNum = itemCounter + num;
-				if(newNum < 1) return;
-				itemCounter = newNum;
-			}
-
-			const updateItemNum = () =>
-			{
-				const [ numOfItems, totalPrice ] = numAndPrice.children;
-				numOfItems.textContent = numOfPrefix + itemCounter;
-				totalPrice.textContent = `${totalPrefix}${(itemInfo.price * itemCounter).toFixed(2)}`;
-			}
-	
-			const itemNumCB = (num) =>
-			{
-				changeItemNum(num);
-				updateItemNum();
-				updateCartTotal();
-			}
-
-			const increaseBtn = component('button', {
-				onclick: itemNumCB.bind(null, 1),
-			}, [
-				'Add'
-			]);
-	
-			const decreaseBtn = component('button', {
-				onclick: itemNumCB.bind(null, -1),
-			}, [
-				'Decrease'
-			]);
-
-			const removeCB = () =>
-			{
-				const cartIsEmpty = () =>
-				{
-					const cart = document.querySelector('#cartContainer');
-					return cart.children.length === 0;
-				}
-
-				mainComponent.remove();
-				updateCartTotal();
-				if(cartIsEmpty())
-				{
-					emptyCartMsg.show();
-				}
-			}
-
-			const removeBtn = component('button', {
-				onclick: removeCB,
-			}, [
-				'Remove'
-			])
-	
-			const buttonContainer = component('div', {
-				id: 'buttonDiv'
-			}, [
-				increaseBtn, decreaseBtn, removeBtn
-			])
-		
-			const infoBox = component('div', {
-				class: [
-					'infoBox'
-				]
-			}, [
-				title,
-				numAndPrice,
-				buttonContainer,
-			])
-	
-			const cart = document.querySelector('#cartContainer');
-			mainComponent.append( itemImg, infoBox );
-			cart.append( mainComponent );
-		}
-
 		const mainComponent = component('div', {
 			class: [ 'menuItem' ]
 		});
@@ -150,8 +43,8 @@ const categoryMaker = menuInfo =>
 									.toLowerCase()
 									.trim()
 
-				const cartSection = document.querySelector('#cartContainer');
-				const result = [...cartSection.children].some(elem =>
+				const cartChildren = cart.get().children;
+				const result = [...cartChildren].some(elem =>
 					{
 						const cartItemHeading = elem.querySelector('div > h3');
 						const cartItemPrice = cartItemHeading.querySelector('span').textContent;
@@ -167,7 +60,7 @@ const categoryMaker = menuInfo =>
 			}
 
 			if(itemIsInCart(name)) return;
-			cartItemMaker(itemInfo)
+			cart.add(itemInfo)
 			updateCartTotal();
 			emptyCartMsg.hide();
 		}
@@ -234,15 +127,16 @@ const updateCartTotal = () =>
 
 	const computeCartTotal = () =>
 	{
-		const cart = document.querySelector('#cartContainer');
-	
-		const pricesArray = [...cart.children].map(elem => {
-			const [ ,price ] = elem.querySelector('div > span:last-child').textContent.split('$');
+		const pricesArray = [...cart.get().children].map(elem => {
+			const text = elem.querySelector('div > span:last-child').textContent;
+			const [ ,price ] = text.split('$');
 			return +price;
 		})
 	
-		const total = pricesArray.reduce((acc, curVal) => acc + curVal, 0).toFixed(2);
-		return total;
+		const totalPrice = pricesArray.reduce((acc, curVal) => acc + curVal, 0).toFixed(2);
+
+		if(!+totalPrice) return 0;
+		return totalPrice;
 	}
 
 	changeCartTotal(computeCartTotal());
@@ -271,22 +165,184 @@ const cartSectionComponent = () =>
 
 	const emptyCart = emptyCartMsg.get();
 
-	const cartContainer = cartContainerComponent.get()
+	const cartContainer = cart.get()
 
 	mainComponent.append( heading, totalPrice, emptyCart, cartContainer );
 	return mainComponent;
 }
 
-const cartContainerComponent = (() =>
+const cart = (() =>
 {
 	const mainComponent = component('div', {
 		id: 'cartContainer'
 	});
 
+	const getUniqueKey = () =>
+	{
+		const getRandomInt = (min, max) =>
+			{
+				min = Math.ceil(min);
+				max = Math.floor(max);
+			
+				const randomInt = Math.floor(Math.random() * (max - min + 1)) + min;
+			
+				return randomInt;
+			}
+
+		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		const charactersLength = characters.length;
+	
+		let result = '';
+		for (let i = 0, randInt = getRandomInt(10, 20); i < randInt; i++)
+		{
+			result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+	
+		return result;
+	}
+
+	const cartItems = [];
+	const add = info =>
+	{
+		const cartItemEl = cartItemMaker( info );
+		const itemInfo = {
+			reference: cartItemEl,
+			name: info.name,
+			price: info.price,
+			key: getUniqueKey(),
+		}
+
+		cartItemEl.setAttribute('data-key', itemInfo.key);
+		mainComponent.append( cartItemEl );
+		cartItems.push( itemInfo );
+		updateCartTotal();
+	}
+
+	const remove = itemKey =>
+	{
+		const itemIndex = cartItems.findIndex(elem =>
+			{
+				const elemKey = elem.key;
+				return elemKey === itemKey;
+			})
+
+		if( itemIndex === -1) return;
+		const itemElem = cartItems[itemIndex].reference;
+
+		cartItems.splice(itemIndex, 1);
+		itemElem.remove();
+		updateCartTotal();
+	}
+
+	const cartItemMaker = itemInfo =>
+	{
+		const mainComponent = component('div', {
+			class: [
+				'cartItem'
+			]
+		})
+	
+		const itemImg = component('img', {
+			src: itemInfo.src,
+		});
+	
+		const title = component('h3', {}, [
+			itemInfo.name,
+			component('span', {}, [
+				`$${itemInfo.price}`
+			])
+		])
+
+		const numOfPrefix = '# of items: ';
+		const totalPrefix = 'total: $';
+		const numAndPrice = component('div', {}, [
+			component('span', {}, [
+				`${numOfPrefix}1`
+			]),
+			component('span', {}, [
+				`${totalPrefix}${itemInfo.price}`
+			]),
+		]);
+
+		let itemCounter = 1;
+		const changeItemNum = num =>
+		{
+			const newNum = itemCounter + num;
+			if(newNum < 1) return;
+			itemCounter = newNum;
+		}
+
+		const updateItemNum = () =>
+		{
+			const [ numOfItems, totalPrice ] = numAndPrice.children;
+			numOfItems.textContent = numOfPrefix + itemCounter;
+			totalPrice.textContent = `${totalPrefix}${(itemInfo.price * itemCounter).toFixed(2)}`;
+		}
+
+		const itemNumCB = (num) =>
+		{
+			changeItemNum(num);
+			updateItemNum();
+			updateCartTotal();
+		}
+
+		const increaseBtn = component('button', {
+			onclick: itemNumCB.bind(null, 1),
+		}, [
+			'Add'
+		]);
+
+		const decreaseBtn = component('button', {
+			onclick: itemNumCB.bind(null, -1),
+		}, [
+			'Decrease'
+		]);
+
+		const removeCB = () =>
+		{
+			cart.remove(mainComponent.dataset.key);	
+			if(cart.isEmpty())
+			{
+				emptyCartMsg.show();
+			}
+		}
+
+		const removeBtn = component('button', {
+			onclick: removeCB,
+		}, [
+			'Remove'
+		])
+
+		const buttonContainer = component('div', {
+			id: 'buttonDiv'
+		}, [
+			increaseBtn, decreaseBtn, removeBtn
+		])
+	
+		const infoBox = component('div', {
+			class: [
+				'infoBox'
+			]
+		}, [
+			title,
+			numAndPrice,
+			buttonContainer,
+		])
+
+		mainComponent.append( itemImg, infoBox );
+		return mainComponent;
+	}
+
 	return {
 		get: () => mainComponent,
+		isEmpty: () => mainComponent.children.length === 0,
+		items: () => [ ...cartItems ],
+		add,
+		remove,
 	}
-})()
+})();
+
+window.cart = cart;
 
 const emptyCartMsg = (() =>
 {
@@ -295,7 +351,7 @@ const emptyCartMsg = (() =>
 	}, [
 		'Uh oh, looks like your cart is empty!',
 		component('br'),
-		' Fill your cart by buying some items!',
+		'Fill your cart by buying some items!',
 	]);
 
 	const classSwitch = operation => mainComponent.classList[operation]('invis');
@@ -349,13 +405,13 @@ export default (() =>
 		]
 	})
 
-	const cart = cartSectionComponent();
+	const cartSection = cartSectionComponent();
 
 	return [
 		tabTitle,
 		mainCourseMenu,
 		appetizerMenu,
 		beverageMenu,
-		cart,
+		cartSection,
 	]
 })();
