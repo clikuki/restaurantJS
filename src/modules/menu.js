@@ -9,13 +9,10 @@ const itemIsInCart = itemName =>
 
 	for(const elem of cart.children)
 	{
-		if(!elemIsCartMsg(elem))
+		const [ elemName ] = elem.querySelector('div > h3').textContent.split('$');
+		if(elemName.toLowerCase() === itemName.toLowerCase())
 		{
-			const [ elemName ] = elem.querySelector('div > h3').textContent.split('$');
-			if(elemName.toLowerCase() === itemName.toLowerCase())
-			{
-				return true;
-			}
+			return true;
 		}
 	}
 
@@ -91,7 +88,7 @@ const categoryMaker = menuInfo =>
 				const cartIsEmpty = () =>
 				{
 					const cart = document.querySelector('#cartContainer');
-					return cart.children.length <= 1;
+					return cart.children.length === 0;
 				}
 
 				mainComponent.remove();
@@ -215,35 +212,29 @@ const mainCourseMaker = () =>
 	return mainComponent;
 }
 
-const computeCartTotal = () =>
-{
-	const cart = document.querySelector('#cartContainer');
-
-	const pricesArray = [...cart.children].map(elem => {
-		if(elemIsCartMsg(elem)) return 0;
-		const [ ,price ] = elem.querySelector('div > span:last-child').textContent.split('$');
-		return +price;
-	})
-
-	const total = pricesArray.reduce((acc, curVal) => acc + curVal, 0).toFixed(2);
-	return total;
-}
-
-const elemIsCartMsg = elem =>
-{
-	return elem.id === 'emptyCartMsg';
-}
-
-const changeCartTotal = newTotal =>
-{
-	const cartTotalElem = document.querySelector('#cartTotal');
-	const [ prefix ] = cartTotalElem.textContent.split('$');
-
-	cartTotalElem.textContent = `${prefix}$${newTotal}`;
-}
-
 const updateCartTotal = () =>
 {
+	const changeCartTotal = newTotal =>
+	{
+		const cartTotalElem = document.querySelector('#cartTotal');
+		const [ prefix ] = cartTotalElem.textContent.split('$');
+	
+		cartTotalElem.textContent = `${prefix}$${newTotal}`;
+	}
+
+	const computeCartTotal = () =>
+	{
+		const cart = document.querySelector('#cartContainer');
+	
+		const pricesArray = [...cart.children].map(elem => {
+			const [ ,price ] = elem.querySelector('div > span:last-child').textContent.split('$');
+			return +price;
+		})
+	
+		const total = pricesArray.reduce((acc, curVal) => acc + curVal, 0).toFixed(2);
+		return total;
+	}
+
 	changeCartTotal(computeCartTotal());
 }
 
@@ -272,11 +263,9 @@ const cartComponent = () =>
 
 	const cartItemContainer = component('div', {
 		id: 'cartContainer'
-	}, [
-		emptyCart
-	]);
+	});
 
-	mainComponent.append( heading, totalPrice, cartItemContainer );
+	mainComponent.append( heading, totalPrice, emptyCart, cartItemContainer );
 	return mainComponent;
 }
 
