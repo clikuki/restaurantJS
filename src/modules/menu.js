@@ -9,10 +9,13 @@ const itemIsInCart = itemName =>
 
 	for(const elem of cart.children)
 	{
-		const [ elemName ] = elem.querySelector('div > h3').textContent.split('$');
-		if(elemName.toLowerCase() === itemName.toLowerCase())
+		if(!elemIsCartMsg(elem))
 		{
-			return true;
+			const [ elemName ] = elem.querySelector('div > h3').textContent.split('$');
+			if(elemName.toLowerCase() === itemName.toLowerCase())
+			{
+				return true;
+			}
 		}
 	}
 
@@ -85,8 +88,18 @@ const categoryMaker = menuInfo =>
 
 			const removeCB = () =>
 			{
+				const cartIsEmpty = () =>
+				{
+					const cart = document.querySelector('#cartContainer');
+					return cart.children.length <= 1;
+				}
+
 				mainComponent.remove();
 				updateCartTotal();
+				if(cartIsEmpty())
+				{
+					emptyCartMsg.show();
+				}
 			}
 
 			const removeBtn = component('button', {
@@ -149,6 +162,7 @@ const categoryMaker = menuInfo =>
 			if(itemIsInCart(name)) return;
 			cartItemMaker(itemInfo)
 			updateCartTotal();
+			emptyCartMsg.hide();
 		}
 
 		const purchaseBtn = component('button', {
@@ -206,12 +220,18 @@ const computeCartTotal = () =>
 	const cart = document.querySelector('#cartContainer');
 
 	const pricesArray = [...cart.children].map(elem => {
+		if(elemIsCartMsg(elem)) return 0;
 		const [ ,price ] = elem.querySelector('div > span:last-child').textContent.split('$');
 		return +price;
 	})
 
 	const total = pricesArray.reduce((acc, curVal) => acc + curVal, 0).toFixed(2);
 	return total;
+}
+
+const elemIsCartMsg = elem =>
+{
+	return elem.id === 'emptyCartMsg';
 }
 
 const changeCartTotal = newTotal =>
@@ -248,13 +268,38 @@ const cartComponent = () =>
 		'Total: $0'
 	])
 
+	const emptyCart = emptyCartMsg.get();
+
 	const cartItemContainer = component('div', {
 		id: 'cartContainer'
-	});
+	}, [
+		emptyCart
+	]);
 
 	mainComponent.append( heading, totalPrice, cartItemContainer );
 	return mainComponent;
 }
+
+const emptyCartMsg = (() =>
+{
+	const mainComponent = component('div', {
+		id: 'emptyCartMsg'
+	}, [
+		'Uh oh, looks like your cart is empty!',
+		component('br'),
+		' Fill your cart by buying some items!',
+	]);
+
+	const classSwitch = operation => mainComponent.classList[operation]('invis');
+
+	return {
+		get: () => mainComponent,
+		hide: classSwitch.bind(null, 'add'),
+		show: classSwitch.bind(null, 'remove'),
+	}
+})()
+
+window.emptyCartMsg = emptyCartMsg;
 
 export default (() =>
 {

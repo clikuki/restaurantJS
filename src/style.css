@@ -240,6 +240,16 @@ footer
 	display: flex;
 	background-color: var(--box-bg-color);
 }
+
+#emptyCartMsg
+{
+	text-align: center;
+	margin: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	background-color: var(--box-bg-color);
+}
+
 .infoBox
 {
 	flex-grow: 1;
@@ -286,6 +296,11 @@ footer
 {
 	display: flex;
 	justify-content: center;
+}
+
+.invis
+{
+	display: none;
 }
 
 img
