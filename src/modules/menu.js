@@ -299,8 +299,6 @@ const emptyCartMsg = (() =>
 	}
 })()
 
-window.emptyCartMsg = emptyCartMsg;
-
 export default (() =>
 {
 	const tabTitle = component('h1', {
