@@ -39,20 +39,14 @@ const categoryMaker = menuInfo =>
 		{
 			const itemIsInCart = menuItemName =>
 			{
-				menuItemName = menuItemName
-									.toLowerCase()
-									.trim()
+				const formatStr = str => str.trim().toLowerCase();
 
-				const cartChildren = cart.get().children;
-				const result = [...cartChildren].some(elem =>
+				menuItemName = formatStr(menuItemName);
+
+				const cartItemsInfo = cart.items();
+				const result = cartItemsInfo.some(info =>
 					{
-						const cartItemHeading = elem.querySelector('div > h3');
-						const cartItemPrice = cartItemHeading.querySelector('span').textContent;
-						const cartItemName = cartItemHeading.textContent
-															.replace(cartItemPrice, '')
-															.toLowerCase()
-															.trim();
-
+						const cartItemName = formatStr(info.name)
 						return cartItemName === menuItemName;
 					});
 			
@@ -117,6 +111,7 @@ const mainCourseMaker = () =>
 
 const updateCartTotal = () =>
 {
+	// const cartInfo
 	const changeCartTotal = newTotal =>
 	{
 		const cartTotalElem = document.querySelector('#cartTotal');
@@ -127,12 +122,7 @@ const updateCartTotal = () =>
 
 	const computeCartTotal = () =>
 	{
-		const pricesArray = [...cart.get().children].map(elem => {
-			const text = elem.querySelector('div > span:last-child').textContent;
-			const [ ,price ] = text.split('$');
-			return +price;
-		})
-	
+		const pricesArray = cart.items().map(info => info.price);
 		const totalPrice = pricesArray.reduce((acc, curVal) => acc + curVal, 0).toFixed(2);
 
 		if(!+totalPrice) return 0;
