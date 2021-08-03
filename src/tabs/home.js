@@ -1,5 +1,5 @@
-import component from "./component";
-import bulletMaker from "./bulletMaker";
+import component from '../modules/component';
+import bulletMaker from "../modules/bulletMaker";
 
 function chooseRestaurantComponent()
 {

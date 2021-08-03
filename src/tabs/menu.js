@@ -1,5 +1,4 @@
-import component from './component';
-
+import component from '../modules/component';
 import water from '../assets/glassOfWater.png';
 import pizza from '../assets/pizzaSlice.png';
 

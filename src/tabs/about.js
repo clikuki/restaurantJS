@@ -1,4 +1,4 @@
-import component from "./component";
+import component from '../modules/component';
 
 const strikethrough = str => component('del', {}, [ str ]);
 

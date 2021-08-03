@@ -1,6 +1,6 @@
-import component from "./component";
-import bulletMaker from "./bulletMaker";
-import switchTab from "./switchTab";
+import component from '../modules/component';
+import bulletMaker from "../modules/bulletMaker";
+import switchTab from "../modules/switchTab";
 
 function phoneNumComponent()
 {

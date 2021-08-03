@@ -1,7 +1,7 @@
-import home from "./home";
-import menu from "./menu";
-import contact from "./contact";
-import about from "./about";
+import home from "../tabs/home";
+import menu from "../tabs/menu";
+import contact from "../tabs/contact";
+import about from "../tabs/about";
 import component from "./component";
 
 const mainElem = document.querySelector('main');
@@ -40,7 +40,7 @@ const mainElemSwapChild = content =>
 	mainElem.replaceChild(content, mainElem.lastChild);
 }
 
-export default function(tabName)
+export default function(tabName, moveTab = true)
 {
 	if(currTab !== tabName)
 	{
@@ -54,7 +54,7 @@ export default function(tabName)
 				id: 'content'
 			}, children);
 
-			switchCurTabClass(tabName);
+			if(moveTab)	switchCurTabClass(tabName);
 			mainElemSwapChild(content);
 			mainElem.scrollTop = 0; // scrolls to top in case the last tab was long
 		}
