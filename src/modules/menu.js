@@ -55,7 +55,6 @@ const categoryMaker = menuInfo =>
 
 			if(itemIsInCart(name)) return;
 			cartCont.add(itemInfo)
-			cartSection.updateTotal();
 			emptyCartMsg.hide();
 		}
 
@@ -83,7 +82,7 @@ const categoryMaker = menuInfo =>
 
 	mainComponent.append( heading, ...items );
 	return mainComponent;
-}
+};
 
 const mainCourseMaker = () =>
 {
@@ -107,7 +106,7 @@ const mainCourseMaker = () =>
 
 	mainComponent.append( heading, apology );
 	return mainComponent;
-}
+};
 
 const emptyCartMsg = (() =>
 {
@@ -126,7 +125,7 @@ const emptyCartMsg = (() =>
 		hide: classSwitch.bind(null, 'add'),
 		show: classSwitch.bind(null, 'remove'),
 	}
-})()
+})();
 
 const cartCont = (() =>
 {
@@ -166,6 +165,7 @@ const cartCont = (() =>
 			reference: cartItemEl,
 			name: info.name,
 			price: info.price,
+			numInCart: 1,
 			key: cartItemEl.dataset.key,
 		}
 
@@ -174,9 +174,9 @@ const cartCont = (() =>
 		cartSection.updateTotal();
 	}
 
-	const remove = itemKey =>
+	const remove = key =>
 	{
-		const itemIndex = cartItems.findIndex(elem => elem.key === itemKey);
+		const itemIndex = getItemFromKey(key);
 
 		if( itemIndex === -1) return;
 		const itemElem = cartItems[itemIndex].reference;
@@ -186,13 +186,16 @@ const cartCont = (() =>
 		cartSection.updateTotal();
 	}
 
+	const getItemFromKey = key => cartItems.findIndex(elem => elem.key === key);
+
 	const cartItemMaker = itemInfo =>
 	{
+		const key = getUniqueKey();
 		const mainComponent = component('div', {
 			class: [
 				'cartItem'
 			],
-			'data-key': getUniqueKey(),
+			'data-key': key,
 		})
 	
 		const itemImg = component('img', {
@@ -217,25 +220,25 @@ const cartCont = (() =>
 			]),
 		]);
 
-		let itemCounter = 1;
 		const changeItemNum = num =>
 		{
-			const newNum = itemCounter + num;
-			if(newNum < 1) return;
-			itemCounter = newNum;
+			const obj = cartCont.items(key);
+			const newNum = obj.numInCart + num;
+			if(newNum > 0) obj.numInCart = newNum;
+			return obj.numInCart;
 		}
 
-		const updateItemNum = () =>
+		const updateItemNum = newNum =>
 		{
 			const [ numOfItems, totalPrice ] = numAndPrice.children;
-			numOfItems.textContent = numOfPrefix + itemCounter;
-			totalPrice.textContent = `${totalPrefix}${(itemInfo.price * itemCounter).toFixed(2)}`;
+			numOfItems.textContent = numOfPrefix + newNum;
+			totalPrice.textContent = `${totalPrefix}${(itemInfo.price * newNum).toFixed(2)}`;
 		}
 
 		const itemNumCB = (num) =>
 		{
-			changeItemNum(num);
-			updateItemNum();
+			const newNum = changeItemNum(num);
+			updateItemNum(newNum);
 			cartSection.updateTotal();
 		}
 
@@ -286,10 +289,16 @@ const cartCont = (() =>
 		return mainComponent;
 	}
 
+	const items = (key = null) =>
+	{
+		if(key === null) return [ ...cartItems ];
+		return cartItems[getItemFromKey(key)];
+	}
+
 	return {
 		get: () => mainComponent,
 		isEmpty: () => mainComponent.children.length === 0,
-		items: () => [ ...cartItems ],
+		items,
 		add,
 		remove,
 	}
@@ -330,9 +339,9 @@ const cartSection = (() =>
 	
 		const computeTotal = () =>
 		{
-			const pricesArray = cartCont.items().map(info => info.price);
-			const totalPrice = pricesArray.reduce((acc, curVal) => acc + curVal, 0).toFixed(2);
-	
+			const pricesArray = cartCont.items().map(info => ({ price: info.price, numInCart: info.numInCart }) );
+			const totalPrice = pricesArray.reduce((acc, curVal) => acc + (curVal.price * curVal.numInCart), 0).toFixed(2);
+			
 			if(!+totalPrice) return 0;
 			return totalPrice;
 		}
@@ -345,9 +354,7 @@ const cartSection = (() =>
 		get: () => mainComponent,
 		updateTotal,
 	};
-})()
-
-window.cart = cartCont;
+})();
 
 export default (() =>
 {
