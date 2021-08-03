@@ -327,6 +327,20 @@ const cartSection = (() =>
 	const emptyCart = emptyCartMsg.get();
 	const cartContainer = cartCont.get();
 
+	const purchaseBtn = component('button', {
+		id: 'purchaseBtn',
+	}, [
+		'Purchase'
+	]);
+
+	const btnDiv = component('div', {
+		class: [
+			'divCenter',
+		]
+	}, [
+		purchaseBtn
+	])
+
 	const updateTotal = () =>
 	{
 		const changeTotal = newTotal =>
@@ -349,7 +363,7 @@ const cartSection = (() =>
 		changeTotal(computeTotal());
 	}
 
-	mainComponent.append( heading, totalPrice, emptyCart, cartContainer );
+	mainComponent.append( heading, totalPrice, emptyCart, cartContainer, btnDiv );
 	return {
 		get: () => mainComponent,
 		updateTotal,
