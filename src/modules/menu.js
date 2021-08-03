@@ -199,10 +199,9 @@ const cart = (() =>
 			reference: cartItemEl,
 			name: info.name,
 			price: info.price,
-			key: getUniqueKey(),
+			key: cartItemEl.dataset.key,
 		}
 
-		cartItemEl.setAttribute('data-key', itemInfo.key);
 		mainComponent.append( cartItemEl );
 		cartItems.push( itemInfo );
 		updateCartTotal();
@@ -229,7 +228,8 @@ const cart = (() =>
 		const mainComponent = component('div', {
 			class: [
 				'cartItem'
-			]
+			],
+			'data-set': getUniqueKey(),
 		})
 	
 		const itemImg = component('img', {

@@ -18,7 +18,8 @@ export default function(tag, options = {}, children)
 				break;
 
 			default:
-				element[key] = value;
+				if(key.match(/^data-/i)) element.setAttribute(key, value);
+				else element[key] = value;
 				break;
 		}
 	}
