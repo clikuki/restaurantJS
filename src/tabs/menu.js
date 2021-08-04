@@ -342,9 +342,33 @@ const cartSection = (() =>
 	const emptyCart = cartMsg.get();
 	const cartContainer = cartCont.get();
 
+	const confirmOrderComponents = () => [
+		component('h2', {
+			class: [
+				'heading',
+			]
+		}, [ 'Order Form' ]),
+		component('p', {}, [
+			'Please enter your address and click "Confirm" to confirm your order.'
+		]),
+		component('p', {}, [
+			`By pressing "Confirm", you will purchase $${cartSection.total()} worth of good food!`
+		]),
+		component('div', {
+			id: 'addressInputDiv',
+		}, [
+			component('input', {
+				placeholder: 'Address'
+			}),
+			component('button', {}, [
+				'Confirm'
+			]),
+		]),
+	]
+
 	const purchaseBtn = component('button', {
 		id: 'purchaseBtn',
-		onclick: modal,
+		onclick: () => modal.show(confirmOrderComponents()),
 	}, [
 		'Purchase'
 	]);

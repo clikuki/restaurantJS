@@ -5,7 +5,7 @@ const modal = (() =>
 	const bodyElem = document.querySelector('body');
 	const mainElem = document.querySelector('main');
 
-	const modalFunc = operation =>
+	const modalState = operation =>
 	{
 		const classSwitch = (elem, operation, className) => 
 		{
@@ -20,13 +20,18 @@ const modal = (() =>
 		classSwitch(mainElem, operation, 'stopScroll')
 	}
 
-	const modalContent = component('div', {}, [
-		'Hi, Im a modal!'
-	]);
+	const fillModal = nodes =>
+	{
+		modalContent.textContent = '';
+		modalContent.append(...nodes);
+	}
 
+	const modalContent = component('div');
+
+	const closeModal = () => modalState('add');
 	const modalCloseBtn = component('button', {
 		id: 'modalCloseBtn',
-		onclick: modalFunc.bind(null, 'add'),
+		onclick: closeModal,
 	})
 	
 	const modalBox = component('div', {
@@ -47,7 +52,14 @@ const modal = (() =>
 
 	bodyElem.append(modalBg);
 
-	return modalFunc.bind(null, 'remove');
+	return {
+		show: nodes =>
+			{
+				fillModal(nodes);
+				modalState('remove');
+			},
+		hide: closeModal,
+	}
 })()
 
 export default modal;
