@@ -143,6 +143,7 @@ section > p
 #modalCloseBtn::after
 {
 	content: "\00d7";
+	font-size: larger;
 }
 
 footer

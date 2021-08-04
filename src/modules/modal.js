@@ -2,7 +2,7 @@ import component from './component';
 
 const modal = (() =>
 {
-	const rootElem = document.querySelector(':root');
+	const bodyElem = document.querySelector('body');
 	const mainElem = document.querySelector('main');
 
 	const modalFunc = operation =>
@@ -45,7 +45,7 @@ const modal = (() =>
 		modalBox
 	]);
 
-	rootElem.append(modalBg);
+	bodyElem.append(modalBg);
 
 	return modalFunc.bind(null, 'remove');
 })()
