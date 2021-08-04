@@ -55,7 +55,7 @@ const categoryMaker = menuInfo =>
 
 			if(itemIsInCart(name)) return;
 			cartCont.add(itemInfo)
-			emptyCartMsg.hide();
+			cartMsg.hide();
 		}
 
 		const purchaseBtn = component('button', {
@@ -108,7 +108,7 @@ const mainCourseMaker = () =>
 	return mainComponent;
 };
 
-const emptyCartMsg = (() =>
+const cartMsg = (() =>
 {
 	const mainComponent = component('div', {
 		id: 'emptyCartMsg'
@@ -176,7 +176,7 @@ const cartCont = (() =>
 
 	const remove = key =>
 	{
-		const itemIndex = getItemFromKey(key);
+		const itemIndex = getIndexFromKey(key);
 
 		if( itemIndex === -1) return;
 		const itemElem = cartItems[itemIndex].reference;
@@ -186,7 +186,7 @@ const cartCont = (() =>
 		cartSection.updateTotal();
 	}
 
-	const getItemFromKey = key => cartItems.findIndex(elem => elem.key === key);
+	const getIndexFromKey = key => cartItems.findIndex(elem => elem.key === key);
 
 	const cartItemMaker = itemInfo =>
 	{
@@ -259,7 +259,7 @@ const cartCont = (() =>
 			cartCont.remove(mainComponent.dataset.key);	
 			if(cartCont.isEmpty())
 			{
-				emptyCartMsg.show();
+				cartMsg.show();
 			}
 		}
 
@@ -292,12 +292,26 @@ const cartCont = (() =>
 	const items = (key = null) =>
 	{
 		if(key === null) return [ ...cartItems ];
-		return cartItems[getItemFromKey(key)];
+		return cartItems[getIndexFromKey(key)];
 	}
+
+	const emptyCart = () =>
+	{
+		for(const cartItem of cartItems)
+		{
+			cartItem.reference.remove();
+		}
+
+		cartItems.length = 0;
+		cartSection.updateTotal();
+	}
+
+	window.emptyCart = emptyCart;
 
 	return {
 		get: () => mainComponent,
 		isEmpty: () => mainComponent.children.length === 0,
+		emptyCart,
 		items,
 		add,
 		remove,
@@ -318,13 +332,14 @@ const cartSection = (() =>
 		'Cart'
 	]);
 
+	const pricePrefix = 'Total: $';
 	const totalPrice = component('p', {
 		id: 'cartTotal',
 	}, [
-		'Total: $0'
+		`${pricePrefix}0`,
 	])
 
-	const emptyCart = emptyCartMsg.get();
+	const emptyCart = cartMsg.get();
 	const cartContainer = cartCont.get();
 
 	const purchaseBtn = component('button', {
@@ -344,18 +359,12 @@ const cartSection = (() =>
 
 	const updateTotal = () =>
 	{
-		const changeTotal = newTotal =>
-		{
-			const cartTotalElem = document.querySelector('#cartTotal');
-			const [ prefix ] = cartTotalElem.textContent.split('$');
-		
-			cartTotalElem.textContent = `${prefix}$${newTotal}`;
-		}
+		const changeTotal = newTotal => totalPrice.textContent = `${pricePrefix}${newTotal}`;
 	
 		const computeTotal = () =>
 		{
-			const pricesArray = cartCont.items().map(info => ({ price: info.price, numInCart: info.numInCart }) );
-			const totalPrice = pricesArray.reduce((acc, curVal) => acc + (curVal.price * curVal.numInCart), 0).toFixed(2);
+			const pricesArray = cartCont.items().map(info => info.price * info.numInCart);
+			const totalPrice = pricesArray.reduce((acc, curVal) => acc +  curVal, 0).toFixed(2);
 			
 			if(!+totalPrice) return 0;
 			return totalPrice;
@@ -367,6 +376,7 @@ const cartSection = (() =>
 	mainComponent.append( heading, totalPrice, emptyCart, cartContainer, btnDiv );
 	return {
 		get: () => mainComponent,
+		total: () => +totalPrice.textContent.replace(pricePrefix, ''),
 		updateTotal,
 	};
 })();
