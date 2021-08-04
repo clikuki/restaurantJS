@@ -169,7 +169,7 @@ const cartCont = (() =>
 			key: cartItemEl.dataset.key,
 		}
 
-		mainComponent.append( cartItemEl );
+		mainComponent.prepend( cartItemEl );
 		cartItems.push( itemInfo );
 		cartSection.updateTotal();
 	}
