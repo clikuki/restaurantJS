@@ -107,6 +107,30 @@ section > p
 	word-wrap: break-word;
 }
 
+#modal, #modalBg
+{
+	position: absolute;
+}
+
+#modalBg
+{
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #44444465;
+}
+
+#modal
+{
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: var(--main-bg-color);
+	padding: 10px;
+	border-radius: 10px;
+}
+
 footer
 {
 	display: flex;
@@ -306,6 +330,11 @@ footer
 .invis
 {
 	display: none;
+}
+
+.stopScroll
+{
+	overflow: hidden;
 }
 
 img

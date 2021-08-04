@@ -1,4 +1,5 @@
 import component from '../modules/component';
+import modal from '../modules/modal'
 import water from '../assets/glassOfWater.png';
 import pizza from '../assets/pizzaSlice.png';
 
@@ -328,9 +329,12 @@ const cartSection = (() =>
 
 	const purchaseBtn = component('button', {
 		id: 'purchaseBtn',
+		onclick: modal.show,
 	}, [
 		'Purchase'
 	]);
+
+	window.modal = modal;
 
 	const btnDiv = component('div', {
 		class: [
