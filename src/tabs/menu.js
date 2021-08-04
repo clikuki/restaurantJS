@@ -329,12 +329,10 @@ const cartSection = (() =>
 
 	const purchaseBtn = component('button', {
 		id: 'purchaseBtn',
-		onclick: modal.show,
+		onclick: modal,
 	}, [
 		'Purchase'
 	]);
-
-	window.modal = modal;
 
 	const btnDiv = component('div', {
 		class: [

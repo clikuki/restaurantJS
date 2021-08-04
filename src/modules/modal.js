@@ -4,11 +4,36 @@ const modal = (() =>
 {
 	const rootElem = document.querySelector(':root');
 	const mainElem = document.querySelector('main');
+
+	const modalFunc = operation =>
+	{
+		const classSwitch = (elem, operation, className) => 
+		{
+			elem.classList[operation](className);
+		}
+
+		classSwitch(modalBg, operation, 'invis');
+
+		if(operation === 'add') operation = 'remove';
+		else operation = 'add';
+
+		classSwitch(mainElem, operation, 'stopScroll')
+	}
+
+	const modalContent = component('div', {}, [
+		'Hi, Im a modal!'
+	]);
+
+	const modalCloseBtn = component('button', {
+		id: 'modalCloseBtn',
+		onclick: modalFunc.bind(null, 'add'),
+	})
 	
 	const modalBox = component('div', {
 		id: 'modal',
 	}, [
-		'Hi, Im a modal!'
+		modalCloseBtn,
+		modalContent,
 	]);
 
 	const modalBg = component('div', {
@@ -20,22 +45,9 @@ const modal = (() =>
 		modalBox
 	]);
 
-	const classSwitch = operation => modalBg.classList[operation]('invis');
-	const scrollSwitch = operation => mainElem.classList[operation]('stopScroll');
-
 	rootElem.append(modalBg);
 
-	const modalFunc = operation =>
-	{
-		classSwitch(operation);
-		if(operation === 'add') scrollSwitch('remove');
-		else scrollSwitch('add')
-	}
-
-	return {
-		hide: modalFunc.bind(null, 'add'),
-		show: modalFunc.bind(null, 'remove'),
-	}
+	return modalFunc.bind(null, 'remove');
 })()
 
 export default modal;

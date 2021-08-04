@@ -107,7 +107,7 @@ section > p
 	word-wrap: break-word;
 }
 
-#modal, #modalBg
+#modal, #modalBg, #modalCloseBtn
 {
 	position: absolute;
 }
@@ -127,8 +127,22 @@ section > p
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: var(--main-bg-color);
-	padding: 10px;
+	padding: 40px;
 	border-radius: 10px;
+}
+
+#modalCloseBtn
+{
+	top: 5px;
+	right: 5px;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+}
+
+#modalCloseBtn::after
+{
+	content: "\00d7";
 }
 
 footer
