@@ -330,10 +330,26 @@ const cart = (() =>
 	]);
 
 	const pricePrefix = 'Total: $';
-	const totalPrice = component('p', {
+	const totalPrice = component('span', {
 		id: 'cartTotal',
 	}, [
 		`${pricePrefix}0`,
+	])
+
+	const purchaseBtn = component('button', {
+		id: 'purchaseBtn',
+		onclick: () => modal.show(confirmOrderComponents()),
+	}, [
+		'Purchase'
+	]);
+
+	const priceAndBtnDiv = component('div', {
+		class: [
+			'divBetween'
+		]
+	}, [
+		totalPrice,
+		purchaseBtn,
 	])
 
 	const emptyCart = cartMsg.get();
@@ -403,21 +419,6 @@ const cart = (() =>
 		return nodes;
 	}
 
-	const purchaseBtn = component('button', {
-		id: 'purchaseBtn',
-		onclick: () => modal.show(confirmOrderComponents()),
-	}, [
-		'Purchase'
-	]);
-
-	const btnDiv = component('div', {
-		class: [
-			'divCenter',
-		]
-	}, [
-		purchaseBtn
-	])
-
 	const updateTotal = () =>
 	{
 		const changeTotal = newTotal => totalPrice.textContent = `${pricePrefix}${newTotal}`;
@@ -434,7 +435,7 @@ const cart = (() =>
 		changeTotal(computeTotal());
 	}
 
-	mainComponent.append(heading, totalPrice, emptyCart, cartContainer, btnDiv);
+	mainComponent.append(heading, priceAndBtnDiv, emptyCart, cartContainer);
 	return {
 		get: () => mainComponent,
 		total: {
