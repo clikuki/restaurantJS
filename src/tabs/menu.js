@@ -8,24 +8,24 @@ const categoryMaker = menuInfo =>
 	const menuItemMaker = itemInfo =>
 	{
 		const mainComponent = component('div', {
-			class: [ 'menuItem' ]
+			class: ['menuItem']
 		});
-	
+
 		const itemImg = component('img', {
 			src: itemInfo.src,
 		});
-	
+
 		const title = component('h3', {}, [
 			itemInfo.name,
 			component('span', {}, [
 				`$${itemInfo.price}`
 			])
 		])
-	
+
 		const description = component('div', {}, [
-			component('p', {}, itemInfo.desc ),
+			component('p', {}, itemInfo.desc),
 		])
-	
+
 		const infoBox = component('div', {
 			class: [
 				'infoBox'
@@ -45,15 +45,15 @@ const categoryMaker = menuInfo =>
 
 				const cartItemsInfo = cartCont.items();
 				const result = cartItemsInfo.some(info =>
-					{
-						const cartItemName = formatStr(info.name)
-						return cartItemName === menuItemName;
-					});
-			
+				{
+					const cartItemName = formatStr(info.name)
+					return cartItemName === menuItemName;
+				});
+
 				return result;
 			}
 
-			if(itemIsInCart(name)) return;
+			if (itemIsInCart(name)) return;
 			cartCont.add(itemInfo)
 			cartMsg.hide();
 		}
@@ -63,7 +63,7 @@ const categoryMaker = menuInfo =>
 		}, [
 			'Add to cart'
 		]);
-	
+
 		mainComponent.append(itemImg, infoBox, purchaseBtn);
 		return mainComponent;
 	}
@@ -73,14 +73,14 @@ const categoryMaker = menuInfo =>
 			'menuCategory'
 		]
 	})
-	
+
 	const heading = component('h2', {}, [
 		menuInfo.categoryName
 	]);
 
 	const items = menuInfo.items.map(item => menuItemMaker(item));
 
-	mainComponent.append( heading, ...items );
+	mainComponent.append(heading, ...items);
 	return mainComponent;
 };
 
@@ -104,7 +104,7 @@ const mainCourseMaker = () =>
 		'We apologize for the incovenience!',
 	])
 
-	mainComponent.append( heading, apology );
+	mainComponent.append(heading, apology);
 	return mainComponent;
 };
 
@@ -136,31 +136,31 @@ const cartCont = (() =>
 	const getUniqueKey = () =>
 	{
 		const getRandomInt = (min, max) =>
-			{
-				min = Math.ceil(min);
-				max = Math.floor(max);
-			
-				const randomInt = Math.floor(Math.random() * (max - min + 1)) + min;
-			
-				return randomInt;
-			}
+		{
+			min = Math.ceil(min);
+			max = Math.floor(max);
+
+			const randomInt = Math.floor(Math.random() * (max - min + 1)) + min;
+
+			return randomInt;
+		}
 
 		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 		const charactersLength = characters.length;
-	
+
 		let result = '';
 		for (let i = 0, randInt = getRandomInt(10, 20); i < randInt; i++)
 		{
 			result += characters.charAt(Math.floor(Math.random() * charactersLength));
 		}
-	
+
 		return result;
 	}
 
 	const cartItems = [];
 	const add = info =>
 	{
-		const cartItemEl = cartItemMaker( info );
+		const cartItemEl = cartItemMaker(info);
 		const itemInfo = {
 			reference: cartItemEl,
 			name: info.name,
@@ -169,8 +169,8 @@ const cartCont = (() =>
 			key: cartItemEl.dataset.key,
 		}
 
-		mainComponent.prepend( cartItemEl );
-		cartItems.push( itemInfo );
+		mainComponent.prepend(cartItemEl);
+		cartItems.push(itemInfo);
 		cartSection.updateTotal();
 	}
 
@@ -178,7 +178,7 @@ const cartCont = (() =>
 	{
 		const itemIndex = getIndexFromKey(key);
 
-		if( itemIndex === -1) return;
+		if (itemIndex === -1) return;
 		const itemElem = cartItems[itemIndex].reference;
 
 		cartItems.splice(itemIndex, 1);
@@ -197,11 +197,11 @@ const cartCont = (() =>
 			],
 			'data-key': key,
 		})
-	
+
 		const itemImg = component('img', {
 			src: itemInfo.src,
 		});
-	
+
 		const title = component('h3', {}, [
 			itemInfo.name,
 			component('span', {}, [
@@ -224,13 +224,13 @@ const cartCont = (() =>
 		{
 			const obj = cartCont.items(key);
 			const newNum = obj.numInCart + num;
-			if(newNum > 0) obj.numInCart = newNum;
+			if (newNum > 0) obj.numInCart = newNum;
 			return obj.numInCart;
 		}
 
 		const updateItemNum = newNum =>
 		{
-			const [ numOfItems, totalPrice ] = numAndPrice.children;
+			const [numOfItems, totalPrice] = numAndPrice.children;
 			numOfItems.textContent = numOfPrefix + newNum;
 			totalPrice.textContent = `${totalPrefix}${(itemInfo.price * newNum).toFixed(2)}`;
 		}
@@ -256,8 +256,8 @@ const cartCont = (() =>
 
 		const removeCB = () =>
 		{
-			cartCont.remove(mainComponent.dataset.key);	
-			if(cartCont.isEmpty())
+			cartCont.remove(mainComponent.dataset.key);
+			if (cartCont.isEmpty())
 			{
 				cartMsg.show();
 			}
@@ -274,7 +274,7 @@ const cartCont = (() =>
 		}, [
 			increaseBtn, decreaseBtn, removeBtn
 		])
-	
+
 		const infoBox = component('div', {
 			class: [
 				'infoBox'
@@ -285,19 +285,19 @@ const cartCont = (() =>
 			buttonContainer,
 		])
 
-		mainComponent.append( itemImg, infoBox );
+		mainComponent.append(itemImg, infoBox);
 		return mainComponent;
 	}
 
 	const items = (key = null) =>
 	{
-		if(key === null) return [ ...cartItems ];
+		if (key === null) return [...cartItems];
 		return cartItems[getIndexFromKey(key)];
 	}
 
 	const emptyCart = () =>
 	{
-		for(const cartItem of cartItems)
+		for (const cartItem of cartItems)
 		{
 			cartItem.reference.remove();
 		}
@@ -342,29 +342,65 @@ const cartSection = (() =>
 	const emptyCart = cartMsg.get();
 	const cartContainer = cartCont.get();
 
-	const confirmOrderComponents = () => [
-		component('h2', {
-			class: [
-				'heading',
-			]
-		}, [ 'Order Form' ]),
-		component('p', {}, [
-			'Please enter your address and click "Confirm" to confirm your order.'
-		]),
-		component('p', {}, [
-			`By pressing "Confirm", you will purchase $${cartSection.total()} worth of good food!`
-		]),
-		component('div', {
-			id: 'addressInputDiv',
-		}, [
-			component('input', {
-				placeholder: 'Address'
-			}),
-			component('button', {}, [
-				'Confirm'
+	const confirmOrderComponents = () => 
+	{
+		const addressInput = component('input', {
+			placeholder: 'Address'
+		})
+
+		return [
+			component('h2', {
+				class: [
+					'heading',
+				]
+			}, ['Order Form']),
+			component('p', {}, [
+				'Please enter your address and click "Confirm" to confirm your order.'
 			]),
-		]),
-	]
+			component('p', {}, [
+				`By pressing "Confirm", you will purchase $${cartSection.total()} worth of good food!`
+			]),
+			component('div', {
+				id: 'addressInputDiv',
+			}, [
+				addressInput,
+				component('button', {
+					onclick: () =>
+					{
+						modal.show([
+							component('h2', {
+								class: [
+									'heading',
+								],
+							}, [
+								'Thank you!'
+							]),
+							component('p', {}, [
+								'Thank you for ordering, we will deliver your foo- HAHA, JUST KIDDING! ',
+								'YOU FOOL! THERE IS NO FOOD, AND THERE IS NO RESTAURANT! ',
+								`WE KNOW WHERE YOU LIVE (Your address: ${addressInput.value}), `,
+								`AND WE WILL TAKE YOUR HOUSE AND YOUR $${cartSection.total()}! `,
+								'YOU BETTER PREPARE FOR US! ',
+							]),
+							component('div', {
+								class: [
+									'divCenter',
+								]
+							}, [
+								component('button', {
+									onclick: modal.hide,
+								}, [
+									'Oh no!'
+								])
+							]),
+						])
+					}
+				}, [
+					'Confirm'
+				]),
+			]),
+		]
+	}
 
 	const purchaseBtn = component('button', {
 		id: 'purchaseBtn',
@@ -384,20 +420,20 @@ const cartSection = (() =>
 	const updateTotal = () =>
 	{
 		const changeTotal = newTotal => totalPrice.textContent = `${pricePrefix}${newTotal}`;
-	
+
 		const computeTotal = () =>
 		{
 			const pricesArray = cartCont.items().map(info => info.price * info.numInCart);
-			const totalPrice = pricesArray.reduce((acc, curVal) => acc +  curVal, 0).toFixed(2);
-			
-			if(!+totalPrice) return 0;
+			const totalPrice = pricesArray.reduce((acc, curVal) => acc + curVal, 0).toFixed(2);
+
+			if (!+totalPrice) return 0;
 			return totalPrice;
 		}
-	
+
 		changeTotal(computeTotal());
 	}
 
-	mainComponent.append( heading, totalPrice, emptyCart, cartContainer, btnDiv );
+	mainComponent.append(heading, totalPrice, emptyCart, cartContainer, btnDiv);
 	return {
 		get: () => mainComponent,
 		total: () => +totalPrice.textContent.replace(pricePrefix, ''),
@@ -408,7 +444,7 @@ const cartSection = (() =>
 export default (() =>
 {
 	const tabTitle = component('h1', {
-		class: [ 'tabTitle' ],
+		class: ['tabTitle'],
 	}, [
 		'Menu'
 	]);
@@ -439,7 +475,7 @@ export default (() =>
 				name: 'Harmless glass of water',
 				desc: [
 					'Perfectly safe for drinking, ',
-					component('b', {}, [ 'no chemicals' ]),
+					component('b', {}, ['no chemicals']),
 					' mixed in!',
 				],
 				price: 5.99,
