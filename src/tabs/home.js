@@ -31,7 +31,7 @@ function chooseRestaurantComponent()
 
 	const heading = component('h2', {
 		class: [ 'heading' ]
-	}, 'Why choose Restaurant? Because...');
+	}, 'Why choose Shady Foods? Because...');
 	const reasonsList = component('ul', {}, bulletMaker([
 			'We have a wide selection of fooooooods!',
 			[
@@ -108,7 +108,7 @@ export default (() =>
 	const greeting = component('h1', {
 		class: [ 'tabTitle' ],
 	}, [
-		'Welcome to Restaurant!'
+		'Welcome to Shady Foods!'
 	]);
 
 	const chooseRestaurantEl = chooseRestaurantComponent();
