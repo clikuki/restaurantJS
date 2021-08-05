@@ -28,10 +28,16 @@ const modal = (() =>
 
 	const modalContent = component('div');
 
-	const closeModal = () => modalState('add');
+	const hide = () => modalState('add');
+	const show = nodes =>
+	{
+		fillModal(nodes);
+		modalState('remove');
+	}
+
 	const modalCloseBtn = component('button', {
 		id: 'modalCloseBtn',
-		onclick: closeModal,
+		onclick: hide,
 	})
 	
 	const modalBox = component('div', {
@@ -53,12 +59,8 @@ const modal = (() =>
 	bodyElem.append(modalBg);
 
 	return {
-		show: nodes =>
-			{
-				fillModal(nodes);
-				modalState('remove');
-			},
-		hide: closeModal,
+		show,
+		hide,
 	}
 })()
 
