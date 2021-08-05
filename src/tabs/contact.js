@@ -66,7 +66,7 @@ function switchToMenuBtnComponent()
 		onclick: switchTab.bind(null, 'menu'),
 		id: 'goToMenu',
 	}, [
-		'Order from Menu!'
+		'Go to Menu!'
 	]);
 
 	mainComponent.append( switchToMenuBtn );
