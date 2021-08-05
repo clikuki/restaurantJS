@@ -348,7 +348,7 @@ const cartSection = (() =>
 			placeholder: 'Address'
 		})
 
-		return [
+		const nodes = [
 			component('h2', {
 				class: [
 					'heading',
@@ -367,7 +367,7 @@ const cartSection = (() =>
 				component('button', {
 					onclick: () =>
 					{
-						modal.show([
+						const nodes = [
 							component('h2', {
 								class: [
 									'heading',
@@ -393,13 +393,17 @@ const cartSection = (() =>
 									'Oh no!'
 								])
 							]),
-						])
+						]
+
+						modal.show(nodes);
 					}
 				}, [
 					'Confirm'
 				]),
 			]),
 		]
+
+		return nodes;
 	}
 
 	const purchaseBtn = component('button', {
