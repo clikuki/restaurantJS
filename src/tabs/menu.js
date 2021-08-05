@@ -378,7 +378,7 @@ const cartSection = (() =>
 							component('p', {}, [
 								'Thank you for ordering, we will deliver your foo- HAHA, JUST KIDDING! ',
 								'YOU FOOL! THERE IS NO FOOD, AND THERE IS NO RESTAURANT! ',
-								`WE KNOW WHERE YOU LIVE (Your address: ${addressInput.value}), `,
+								`WE KNOW WHERE YOU LIVE (Your address: ${addressInput.value || 'Somewhere'}), `,
 								`AND WE WILL TAKE YOUR HOUSE AND YOUR $${cartSection.total()}! `,
 								'YOU BETTER PREPARE FOR US! ',
 							]),
